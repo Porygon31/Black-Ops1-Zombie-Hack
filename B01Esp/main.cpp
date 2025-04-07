@@ -1,6 +1,9 @@
 #include <iostream>
 #include <Windows.h>
 #include <stdio.h>
+#include <thread>
+#include <chrono>
+#include <iostream>
 
 #include <GLFW/glfw3.h>
 #include <MemMan.h>
@@ -19,8 +22,6 @@ int main(void)
 		return -1;
 
 	/* Create a windowed mode window and its OpenGL context */
-
-
 	glfwWindowHint(GLFW_FLOATING, true);
 	//glfwWindowHint(GLFW_RESIZABLE, false);
 	//glfwWindowHint(GLFW_MAXIMIZED, true);
@@ -58,15 +59,9 @@ int main(void)
 			for (short int i = 0; i < 40; i++)
 			{
 				uintptr_t Entity = MemMan::ReadMem<uintptr_t>(AEntityList + i * Offsets::ODistanceBetween);
-				HANDLE hProc;
-				uintptr_t Ent, moduleBase;
-
 			
-
-
 				if (Entity == NULL) continue;
 				
-
 				// Check if Health is >= 0
 				int Health = MemMan::ReadMem<int>(Entity + Offsets::OHealth);
 				if (Health <= 0) continue;
@@ -77,13 +72,15 @@ int main(void)
 				// W2S Location
 				Vec2 ScreenCoords;
 				if (!WorldToScreen(Location, ScreenCoords, Matrix.Matrix)) continue;
-			
+
+
 				// Draw to screen
 				glBegin(GL_LINES);
 				glVertex2f(0.0f, -1.0f);
 				glVertex2f(ScreenCoords.X, ScreenCoords.Y);
 				glEnd();
-
+				//std::cout << "[main] Zombie #" << i << " screen coords: X=" << ScreenCoords.X << " Y=" << ScreenCoords.Y << std::endl;
+				//std::this_thread::sleep_for(std::chrono::milliseconds(200));
 			}
 
 			/* Swap front and back buffers */
