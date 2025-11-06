@@ -361,3 +361,19 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Fichiers de scraping Python
+subwoofers*.json
+subwoofers*.csv
+homepage_exploration.*
+*.json
+*.csv
+
+# Python virtual environment
+venv/
+env/
+ENV/
+.venv
+
+# OS
+.DS_Store
